@@ -7,17 +7,6 @@ fun main() {
     Day02()
 }
 
-data class Game(
-    val id: Int,
-    val sets: List<Set>
-)
-
-data class Set(
-    var redCubes: Int = 0,
-    var greenCubes: Int = 0,
-    var blueCubes: Int = 0,
-)
-
 const val MAX_RED_CUBES = 12
 const val MAX_GREEN_CUBES = 13
 const val MAX_BLUE_CUBES = 14
