@@ -1,3 +1,8 @@
+package day02
+
+import println
+import readInput
+
 fun main() {
     Day02()
 }
@@ -19,12 +24,12 @@ const val MAX_BLUE_CUBES = 14
 
 class Day02 {
     init {
-        val exampleInput = readInput("Day02_Example")
+        val exampleInput = readInput("day02/Day02_Example")
         val exampleGames = parseInput(exampleInput)
         check(part1(exampleGames) == 8)
         check(part2(exampleGames) == 2286)
 
-        val input = readInput("Day02")
+        val input = readInput("day02/Day02")
         val games = parseInput(input)
         part1(games).println()
         part2(games).println()
