@@ -29,37 +29,33 @@ class Day06 {
         part2(race).println()
     }
 
-    private fun List<String>.parse(part: Part): List<Race> {
-        if (part == Part.ONE) {
-            val timesAllowed = first()
-                .removePrefix("Time:")
-                .split(" ")
-                .filterNot { element -> element.isBlank() }
-                .map { time -> time.toLong() }
-            val recordDistances = last()
-                .removePrefix("Distance:")
-                .split(" ")
-                .filterNot { element -> element.isBlank() }
-                .map { time -> time.toLong() }
+    private fun String.parse(prefix: String) = this
+        .removePrefix(prefix)
+        .split(" ")
+        .filterNot { element -> element.isBlank() }
+        .map { element -> element.toLong() }
 
-            return (timesAllowed zip recordDistances).map { (timeAllowed, recordDistance) ->
-                Race(
-                    timeAllowed = timeAllowed,
-                    recordDistance = recordDistance
-                )
-            }
-        } else {
-            return listOf(
-                Race(
-                    timeAllowed = first().filter { character -> character.isDigit() }.toLong(),
-                    recordDistance = last().filter { character -> character.isDigit() }.toLong()
-                )
+    private fun List<String>.parse(part: Part) = if (part == Part.ONE) {
+        val timesAllowed = first().parse(prefix = "Time:")
+        val recordDistances = last().parse(prefix = "Distance:")
+
+        (timesAllowed zip recordDistances).map { (timeAllowed, recordDistance) ->
+            Race(
+                timeAllowed = timeAllowed,
+                recordDistance = recordDistance
             )
         }
+    } else {
+        listOf(
+            Race(
+                timeAllowed = first().filter { character -> character.isDigit() }.toLong(),
+                recordDistance = last().filter { character -> character.isDigit() }.toLong()
+            )
+        )
     }
 
     private val Race.winningOptions: Int
-        get() = (1..<timeAllowed).count { startingSpeed -> (timeAllowed - startingSpeed) * startingSpeed > recordDistance }
+        get() = (1..<timeAllowed).count { startingSpeed -> ((timeAllowed - startingSpeed) * startingSpeed) > recordDistance }
 
     private fun part1(races: List<Race>) = races.fold(1) { answer, race -> answer * race.winningOptions }
 
